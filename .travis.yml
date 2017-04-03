@@ -1,3 +1,8 @@
+sudo: required
+
+services:
+  - docker
+
 language: go
 
 go:
@@ -7,5 +12,8 @@ install:
     - make get-deps
 
 after_success:
-    - ./temperature-server --port 8076 &
-    - curl http://127.0.0.1:8076/temperature/convertTemperature -X POST -d '{"FromFahrenheit":false,"Temperature":32.0}'  -H 'Content-Type:application/json'
+  - docker images
+  - docker run -d -p 8076:8076 $REPO
+  - docker ps -a
+  - sleep 15
+  - curl http://localhost:8076/temperature/convertTemperature -X POST -d '{"FromFahrenheit":false,"Temperature":32.0}'  -H 'Content-Type:application/json'
