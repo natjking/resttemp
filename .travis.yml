@@ -8,4 +8,4 @@ install:
 
 after_success:
     - ./temperature-server --port 8076 &
-    - curl http://127.0.0.1:8076/temperature/convertTemperature -X POST -d '{"FromFahrenheit":false,"Temperature":32.0}'  -H 'Content-Type: application/json'
+    - curl http://127.0.0.1:8076/temperature/convertTemperature -X POST -d '{"FromFahrenheit":false,"Temperature":32.0}'  -H 'Content-Type:application/json'
