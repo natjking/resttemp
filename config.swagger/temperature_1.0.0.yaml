@@ -1,0 +1,70 @@
+---
+swagger: "2.0"
+info:
+  x-ibm-name: "temperature"
+  title: "Temperature"
+  version: "1.0.0"
+schemes:
+- "http"
+host: "$(catalog.host)"
+basePath: "/temperature"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+securityDefinitions: {}
+x-ibm-configuration:
+  testable: true
+  enforced: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+    - invoke:
+        target-url: "$(target-url)$(request.path)"
+  phase: "realized"
+paths:
+  /convertTemperature:
+    post:
+      responses:
+        200:
+          description: "200 OK"
+          schema:
+            $ref: "#/definitions/Response"
+        400:
+          description: "400"
+          schema:
+            $ref: "#/definitions/Error"
+      parameters:
+      - name: "requestbody"
+        required: false
+        in: "body"
+        schema:
+          $ref: "#/definitions/Request"
+definitions:
+  Error:
+    properties:
+      message:
+        type: "string"
+    additionalProperties: false
+  Request:
+    properties:
+      temperature:
+        type: "number"
+        format: "float"
+      fromFahrenheit:
+        type: "boolean"
+        example: true
+    additionalProperties: false
+  Response:
+    properties:
+      fahrenheit:
+        type: "number"
+        format: "float"
+        example: 120.36
+      celsius:
+        type: "number"
+        format: "float"
+        example: 41.52
+    additionalProperties: false
+tags: []
