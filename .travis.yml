@@ -12,8 +12,9 @@ install:
     - make get-deps
 
 after_success:
+  - ls -lah build/*
   - docker images
-  - docker run -d -p 8076:8076 $REPO
+  - docker run -d -p 8076:8076 temperature-server
   - docker ps -a
   - sleep 15
   - curl http://localhost:8076/temperature/convertTemperature -X POST -d '{"FromFahrenheit":false,"Temperature":32.0}'  -H 'Content-Type:application/json'
