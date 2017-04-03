@@ -5,7 +5,7 @@ get-deps:
 
 # Default target: builds the project
 build:
-        mkdir build
+	mkdir build
 	CGO_ENABLED=O GOOS=linux go build -a -installsuffix cgo -o build/temperature-server -v -x ./cmd/temperature-server
 build-image:
         cd build; docker build -t temperature-server -f ../DockerFile . 
