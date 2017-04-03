@@ -1,4 +1,5 @@
-
+all: build
+   
 get-deps:
 	go get -t ./...
 
