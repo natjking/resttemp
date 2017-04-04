@@ -1,3 +1,4 @@
 FROM scratch
 ADD temperature-server /
+RUN ls -lah
 CMD ["/temperature-server","--port","8076"]
