@@ -1,4 +1,4 @@
-FROM scratch
+FROM alpine
 ADD temperature-server /
 RUN ls -lah
-CMD ["/temperature-server","--port","8076"]
+ENTRYPOINT ["/temperature-server","--port","8076"]
