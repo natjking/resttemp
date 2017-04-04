@@ -1,4 +1,4 @@
-FROM google/debian:wheezy
+FROM scratch
 COPY temperature-server /
 EXPOSE 8076 
-CMD ["/temperature-server","--port","8076"]
+CMD ["/temperature-server","--port","8076","--host","0.0.0.0"]

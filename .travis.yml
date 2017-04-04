@@ -17,9 +17,8 @@ after_success:
   - docker run -d -p 8076:8076 temperature-server
   - DID=`docker ps -a | grep "temperature-server" |  awk '{ print $1 }'`
   - echo $DID
-  - docker inspect --format '{{ .NetworkSettings.Networks.nat.IPAddress }}' $DID
-  - DIP=`docker inspect --format '{{ .NetworkSettings.Networks.nat.IPAddress }}'`
-  - echo $DIP
-  - sleep 15
   - docker logs -t $DID
-  - curl http://$DIP:8076/temperature/convertTemperature -X POST -d '{"FromFahrenheit":false,"Temperature":32.0}'  -H 'Content-Type:application/json'
+  - sleep 15
+  - curl http://localhost:8076/temperature/convertTemperature -X POST -d '{"FromFahrenheit":false,"Temperature":32.0}'  -H 'Content-Type:application/json'
+
+
