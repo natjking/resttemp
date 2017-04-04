@@ -1,4 +1,4 @@
 FROM alpine
 COPY temperature-server /
 RUN ls -lah
-ENTRYPOINT ["./temperature-server","--port","8076","&"]
+ENTRYPOINT ["/temperature-server","--port","8076"]
