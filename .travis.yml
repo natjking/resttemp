@@ -8,6 +8,11 @@ language: go
 go:
   - 1.8.x
 
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-engine
+  - docker --version
+
 install: 
     - make get-deps
 
