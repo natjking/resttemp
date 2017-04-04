@@ -15,7 +15,8 @@ after_success:
   - ls -lah build/*
   - docker images
   - docker run -d -p 8076:8076 temperature-server
-  - docker ps -a
+  - DID=`docker ps -a | grep "temperature-server" |  awk '{ print $1 }'`
+  - echo $DID
   - sleep 15
-  - docker logs -t "temperature-server"
+  - docker logs -t $DID
   - curl http://localhost:8076/temperature/convertTemperature -X POST -d '{"FromFahrenheit":false,"Temperature":32.0}'  -H 'Content-Type:application/json'
