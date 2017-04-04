@@ -1,3 +1,4 @@
 FROM scratch 
 COPY temperature-server /
+EXPOSE 8076 
 CMD ["/temperature-server","--port","8076"]
