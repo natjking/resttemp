@@ -8,7 +8,7 @@ build:
 	mkdir build
 	CGO_ENABLED=O GOOS=linux go build -a -installsuffix cgo -o build/temperature-server ./cmd/temperature-server
 build-image:
-	cp DockerFile build/; cd build; docker build -t temperature-server -f DockerFile .
+	cp DockerFile build/; cd build; docker build -t natjking/temperature-server -f DockerFile .
 
 # Cleans our project: deletes binaries
 clean:

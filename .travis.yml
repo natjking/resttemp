@@ -17,13 +17,18 @@ install:
     - make get-deps
 
 after_success:
+  - export REPO=natjking/temperature-server
   - docker images
-  - docker run -d -p 8076:8076 temperature-server
-  - DID=`docker ps -a | grep "temperature-server" |  awk '{ print $1 }'`
+  - docker run -d -p 8076:8076 $REPO
+  - DID=`docker ps -a | grep $REPO |  awk '{ print $1 }'`
   - echo $DID
   - docker logs -t $DID
   - sleep 15
   - curl 127.0.0.1:8076
   - curl http://localhost:8076/temperature/convertTemperature -X POST -d '{"FromFahrenheit":false,"Temperature":32.0}'  -H 'Content-Type:application/json'
-
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - docker tag $REPO $REPO:$TAG
+  - docker tag $REPO $REPO:travis-$TRAVIS_BUILD_NUMBER
+  - docker push $REPO
 
