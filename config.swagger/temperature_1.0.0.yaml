@@ -24,6 +24,13 @@ x-ibm-configuration:
         target-url: "$(target-url)$(request.path)"
   phase: "realized"
 paths:
+  /availability:
+    get:
+      responses:
+        200:
+          description: "200 OK"
+          schema:
+            $ref: "#/definitions/AllGoodResponse"
   /convertTemperature:
     post:
       responses:
@@ -42,6 +49,11 @@ paths:
         schema:
           $ref: "#/definitions/Request"
 definitions:
+  AllGoodResponse:
+    properties:
+      message:
+        type: "string"
+    additionalProperties: false
   Error:
     properties:
       message:

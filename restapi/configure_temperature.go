@@ -53,6 +53,9 @@ func configureAPI(api *operations.TemperatureAPI) http.Handler {
 		return operations.NewPostConvertTemperatureOK().WithPayload(&models.Response{float32(ce) ,float32(fa)})
 	})
 
+	api.GetAvailabilityHandler = operations.GetAvailabilityHandlerFunc(func(params operations.GetAvailabilityParams) middleware.Responder {
+		return operations.NewGetAvailabilityOK().WithPayload(&models.AllGoodResponse{"Service is up"})
+	})
 	api.ServerShutdown = func() {}
 
 	return setupGlobalMiddleware(api.Serve(setupMiddlewares))

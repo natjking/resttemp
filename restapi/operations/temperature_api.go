@@ -43,6 +43,8 @@ type TemperatureAPI struct {
 	// JSONProducer registers a producer for a "application/json" mime type
 	JSONProducer runtime.Producer
 
+	// GetAvailabilityHandler sets the operation handler for the get availability operation
+	GetAvailabilityHandler GetAvailabilityHandler
 	// PostConvertTemperatureHandler sets the operation handler for the post convert temperature operation
 	PostConvertTemperatureHandler PostConvertTemperatureHandler
 
@@ -106,6 +108,10 @@ func (o *TemperatureAPI) Validate() error {
 
 	if o.JSONProducer == nil {
 		unregistered = append(unregistered, "JSONProducer")
+	}
+
+	if o.GetAvailabilityHandler == nil {
+		unregistered = append(unregistered, "GetAvailabilityHandler")
 	}
 
 	if o.PostConvertTemperatureHandler == nil {
@@ -191,6 +197,11 @@ func (o *TemperatureAPI) initHandlerCache() {
 	if o.handlers == nil {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
+
+	if o.handlers["GET"] == nil {
+		o.handlers[strings.ToUpper("GET")] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/availability"] = NewGetAvailability(o.context, o.GetAvailabilityHandler)
 
 	if o.handlers["POST"] == nil {
 		o.handlers[strings.ToUpper("POST")] = make(map[string]http.Handler)
